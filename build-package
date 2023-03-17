@@ -2,10 +2,9 @@
 
 # Set up the build user and sudo access
 echo ">> Preparing the build environment"
-echo "-> Creating the `build` user..."
+echo "-> Creating the 'build' user..."
 useradd \
-  --create-home \
-  --home-dir /build \
+  --create-home --home-dir /build \
   --shell /usr/bin/bash \
   --user-group \
   build
@@ -17,14 +16,9 @@ EOF
 # Make sure the system is up-to-date
 echo ">> Updating the build environment"
 sudo pacman -Syu --noconfirm --noprogressbar
+echo
 
 # Build the package, as required
 echo ">> Building the package"
-sudo --user=build --login -- \
-  makepkg \
-  --syncdeps \
-  --cleanbuild \
-  --nosign \
-  --rmdeps \
-  --noconfirm \
-  --noprogressbar 
+sudo --user=build --chdir=../package --login -- \
+  makepkg --syncdeps --cleanbuild --nosign --rmdeps --noconfirm --noprogressbar 
