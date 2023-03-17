@@ -8,30 +8,30 @@ WHITE='\033[1;37m'
 NC='\033[0m' # No Color
 
 # Set up the build user and sudo access
-echo "${YELLOW}==>${WHITE} Preparing the build environment${NC}"
-echo "  ${BLUE}->${WHITE} Creating the 'build' user${NC}"
+echo -e "${YELLOW}==>${WHITE} Preparing the build environment${NC}"
+echo -e "  ${BLUE}->${WHITE} Creating the 'build' user${NC}"
 useradd \
   --create-home --home-dir /build \
   --shell /usr/bin/bash \
   --user-group \
   build
-echo "  ${BLUE}->${WHITE} Setting up sudo access for 'build' user${NC}"
+echo -e "  ${BLUE}->${WHITE} Setting up sudo access for 'build' user${NC}"
 cat <<- EOF > /etc/sudoers.d/build
 build ALL=(ALL) NOPASSWD: /usr/bin/pacman
 EOF
-echo "  ${BLUE}->${WHITE} Creating packages/ directory${NC}"
+echo -e "  ${BLUE}->${WHITE} Creating packages/ directory${NC}"
 mkdir -p packages/
-echo "  ${BLUE}->${WHITE} Changing ownership for build/ and packages/${NC}"
+echo -e "  ${BLUE}->${WHITE} Changing ownership for build/ and packages/${NC}"
 chown build:build -R build/ packages/
 echo
 
 # Make sure the system is up-to-date
-echo "${YELLOW}==>${WHITE} Updating the build environment${NC}"
+echo -e "${YELLOW}==>${WHITE} Updating the build environment${NC}"
 sudo pacman -Syu --noconfirm --noprogressbar
 echo
 
 # Build the package, as required
-echo "${YELLOW}==>${WHITE} Building the package${NC}"
+echo -e "${YELLOW}==>${WHITE} Building the package${NC}"
 PKGDEST=$(pwd)/packages
 PACKAGER="Jonathan Wright <jon@than.io>"
 export PKGDEST PACKAGER
