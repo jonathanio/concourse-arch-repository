@@ -23,7 +23,7 @@ echo
 
 # Build the package, as required
 echo ">> Building the package"
-( cd ../package && \
+( cd package/ && \
   sudo --user=build -- \
     makepkg --syncdeps --cleanbuild \
       --nosign --noconfirm --noprogressbar 
