@@ -33,10 +33,11 @@ echo
 # Build the package, as required
 echo -e "${YELLOW}==>${WHITE} Building the package${NC}"
 PKGDEST=$(pwd)/packages
+LOGDEST=$(pwd)/packages
 PACKAGER="Jonathan Wright <jon@than.io>"
-export PKGDEST PACKAGER
+export PKGDEST LOGDEST PACKAGER
 ( cd build/ && \
   sudo --user=build -- \
-    makepkg --syncdeps --cleanbuild --needed \
-      --nosign --noconfirm --noprogressbar 
+    makepkg --syncdeps --needed \
+      --nosign --noconfirm --noprogressbar --log
 )
