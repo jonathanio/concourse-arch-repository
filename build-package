@@ -1,0 +1,30 @@
+#!/usr/bin/env bash -ex
+
+# Set up the build user and sudo access
+echo ">> Preparing the build environment"
+echo "-> Creating the `build` user..."
+useradd \
+  --create-home \
+  --home-dir /build \
+  --shell /usr/bin/bash \
+  --user-group \
+  build
+echo "-> Setting up sudo access"
+cat <<- EOF > /etc/sudoers.d/build
+build ALL=(ALL) NOPASSWD: /usr/bin/pacman
+EOF
+
+# Make sure the system is up-to-date
+echo ">> Updating the build environment"
+sudo pacman -Syu --noconfirm --noprogressbar
+
+# Build the package, as required
+echo ">> Building the package"
+sudo --user=build --login -- \
+  makepkg \
+  --syncdeps \
+  --cleanbuild \
+  --nosign \
+  --rmdeps \
+  --noconfirm \
+  --noprogressbar 
