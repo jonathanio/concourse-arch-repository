@@ -12,6 +12,9 @@ echo "-> Setting up sudo access"
 cat <<- EOF > /etc/sudoers.d/build
 build ALL=(ALL) NOPASSWD: /usr/bin/pacman
 EOF
+echo "-> Changing ownership for package/"
+chown build:build -R package/
+echo
 
 # Make sure the system is up-to-date
 echo ">> Updating the build environment"
