@@ -9,11 +9,8 @@ NC='\033[0m' # No Color
 
 # Set up the build user and sudo access
 echo -e "${YELLOW}==>${WHITE} Preparing the build environment${NC}"
-echo -e "  ${BLUE}->${WHITE} Checking the environment${NC}"
-ulimit -a
+echo -e "  ${BLUE}->${WHITE} Setting the environment${NC}"
 ulimit -n 524288
-echo -e "  ${BLUE}->${WHITE} Verifying the environment${NC}"
-ulimit -a
 echo -e "  ${BLUE}->${WHITE} Creating the 'build' user${NC}"
 useradd \
   --create-home --home-dir /build \
