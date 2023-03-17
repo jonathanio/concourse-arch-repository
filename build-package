@@ -42,3 +42,7 @@ export PACKAGER
     makepkg --syncdeps --needed \
       --nosign --noconfirm --noprogressbar --log
 )
+echo
+
+echo -e "${YELLOW}==>${WHITE} Prepare package artifacts${NC}"
+mv --verbose build/*.pkg.tar.* packages/
