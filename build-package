@@ -12,6 +12,8 @@ echo -e "${YELLOW}==>${WHITE} Preparing the build environment${NC}"
 echo -e "  ${BLUE}->${WHITE} Checking the environment${NC}"
 ulimit -a
 ulimit -n 524288
+echo -e "  ${BLUE}->${WHITE} Verifying the environment${NC}"
+ulimit -a
 echo -e "  ${BLUE}->${WHITE} Creating the 'build' user${NC}"
 useradd \
   --create-home --home-dir /build \
@@ -22,10 +24,8 @@ echo -e "  ${BLUE}->${WHITE} Setting up sudo access for 'build' user${NC}"
 cat <<- EOF > /etc/sudoers.d/build
 build ALL=(ALL) NOPASSWD: /usr/bin/pacman
 EOF
-echo -e "  ${BLUE}->${WHITE} Creating packages/ directory${NC}"
-mkdir -p packages/
-echo -e "  ${BLUE}->${WHITE} Changing ownership for build/ and packages/${NC}"
-chown build:build -R build/ packages/
+echo -e "  ${BLUE}->${WHITE} Changing ownership for build/${NC}"
+chown build:build -R build/
 echo
 
 # Make sure the system is up-to-date
@@ -35,10 +35,8 @@ echo
 
 # Build the package, as required
 echo -e "${YELLOW}==>${WHITE} Building the package${NC}"
-PKGDEST=$(pwd)/packages
-LOGDEST=$(pwd)/packages
 PACKAGER="Jonathan Wright <jon@than.io>"
-export PKGDEST LOGDEST PACKAGER
+export PACKAGER
 ( cd build/ && \
   sudo --user=build -- \
     makepkg --syncdeps --needed \
