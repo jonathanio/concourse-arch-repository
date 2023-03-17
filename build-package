@@ -20,5 +20,8 @@ echo
 
 # Build the package, as required
 echo ">> Building the package"
-sudo --user=build --chdir=../package --login -- \
-  makepkg --syncdeps --cleanbuild --nosign --rmdeps --noconfirm --noprogressbar 
+( cd ../package && \
+  sudo --user=build --login -- \
+    makepkg --syncdeps --cleanbuild \
+      --nosign --noconfirm --noprogressbar 
+)
